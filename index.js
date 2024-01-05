@@ -1,13 +1,20 @@
 import Express from "express";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import bodyParser from "body-parser";
+import morgan from "morgan";
+
+const _direname = dirname(fileURLToPath(import.meta.url));
+
 const app = Express();
 const port = 3000;
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan("combined"));
+app.post("/login", (req, res) => {
+  console.log(req.body);
+});
 app.get("/", (req, res) => {
-  res.send({
-    name: "nor",
-    age: "21",
-    status: "200",
-  });
+  res.sendFile(_direname + "/index.html");
 });
 
 app.get("/about", (req, res) => {
