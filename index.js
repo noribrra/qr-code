@@ -1,35 +1,24 @@
 import Express from "express";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-
+import bodyParser from "body-parser";
 const _direname = dirname(fileURLToPath(import.meta.url));
 
 const app = Express();
 const port = 3000;
-function login(req, res, next) {
-  console.log("method is " + req.method);
-  console.log("url is " + req.url);
-  next();
-}
-app.use(login);
-app.post("/login", (req, res) => {
-  res.send({
-    email: req.body.email,
-    password: req.body.password,
-  });
-  //   console.log(req.body);
-});
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.get("/", (req, res) => {
   res.sendFile(_direname + "/index.html");
 });
-
-app.get("/about", (req, res) => {
-  res.send("<p>i am a fullstack developer</p>");
+app.post("/check", (req, res) => {
+  if (req.body.password === "nor") {
+    res.sendFile(_direname + "/check.html");
+  } else {
+    res.sendFile(_direname + "/index.html");
+  }
 });
 
-app.get("/contact", (req, res) => {
-  res.send("+963994595431");
-});
 app.listen(port, () => {
   console.log("server is running on port " + port);
 });
