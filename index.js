@@ -9,9 +9,13 @@ const _direname = dirname(fileURLToPath(import.meta.url));
 const app = Express();
 const port = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan("combined"));
+app.use(morgan("tiny"));
 app.post("/login", (req, res) => {
-  console.log(req.body);
+  res.send({
+    email: req.body.email,
+    password: req.body.password,
+  });
+  //   console.log(req.body);
 });
 app.get("/", (req, res) => {
   res.sendFile(_direname + "/index.html");
